@@ -1,10 +1,11 @@
 {% load static %}
+{% load feed_tags %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
-    <title>FarmFresh | Signup</title>
+    <title>FarmFresh | Feeds</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
@@ -77,39 +78,90 @@
         </div>
     </nav>
     <!-- Navbar End -->
-    <div style="height: 100px;"></div>
+    <div style="height: 120px;"></div>
 
     <!-- Main Start -->
     <div class="container-fluid banner mb-5" style="min-height: 10vh;">
     </div>
     <!-- Main Start -->
+
+    <!-- Main Start -->
     <div class="mid">
-        <h3>Create an Account</h3>
         <br>
-        <form action="" method="post" class="form">
-            {% csrf_token %}
-            <input type="text" name="username" placeholder="Enter Username...*" class="form-control" required><br>
-            <input type="password" name="password1" placeholder="Enter Password...*" class="form-control" required><br>
-            <input type="password" name="password2" placeholder="Confirm Password...*" class="form-control" required><br>
-            <input type="text" name="full_name" placeholder="Enter Full Name...*" class="form-control" required><br>
-            <input type="email" name="email" placeholder="Enter Email...*" class="form-control" required><br>
-            <input type="number" name="phone" placeholder="Enter Phone...*" class="form-control" required><br>
-            <input type="number" name="pincode" placeholder="Enter Pincode...*" class="form-control" required><br>
-            <input type="text" name="designation" placeholder="Enter Your Designation..." class="form-control"><br>
-            <input type="number" name="exp" placeholder="Years of Experience" class="form-control"><br>
-            <input type="submit" value="Create Account" class="form-control mbtn" style="background-color: limegreen;"><br>
-            <a href="/accounts/login/" style="color: dodgerblue;">Login to your account</a>
-        </form>
+        {% for feed in feeds %}
+       <div class="card form p-2 pt-3">
+        <div class="mrow">
+            <img src="https://icons.veryicon.com/png/o/internet--web/prejudice/user-128.png" class="profile-icon" alt="">
+            <div>
+                <h6 style="margin-top: 15px;"><b>{{feed.posted_by.full_name}}</b></h6>
+                <p style="margin-top: -2px;">{{feed.posted_at}}</p>
+            </div>
+        </div>
+        <br>
+        <p style="padding: 15px;margin-left: 25px;color: black;">{{feed.post_content}}</p>
+      
+        <br>
+        <div class="mrow" style="margin-left: 15px;padding-bottom: 20px;">
+            {% if feed|is_liked_by:current_user %}
+            <i class="fa fa-heart" style="color: red;font-size: 25px;" onclick="likeUnlike('{{feed.id}}','{{current_user.id}}')"></i>
+            {% else %}
+            <i class="fa fa-heart" style="font-size: 25px;" id="lkbtn{{feed.id}}" onclick="likeUnlike('{{feed.id}}','{{current_user.id}}')"></i>
+            {% endif %}
+            <p style="margin-left: 10px;"><span id="lkcount{{feed.id}}">{{feed.total_likes}}</span> likes</p>
+        </div>
+        </div>
+       <br>
+       {% endfor %}
+
+
     </div>
 
     <br><br><br><br>
 
-    {% if err %}
     <script>
-        alert('{{err}}');
-        location.href='/accounts/signup';
+        function likeUnlike(id, uid) {
+        const url = `http://127.0.0.1:8000/feeds/like-unlike/${id}/${uid}`;
+
+        fetch(url)
+            .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+            })
+            .then(data => {
+                if(data.status === 'liked'){
+                    document.getElementById('lkbtn'+id).style='color:red;font-size: 25px;';
+                    var numberSpan = document.getElementById('lkcount'+id);
+                    var currentNumber = parseInt(numberSpan.textContent);
+                    var newNumber = currentNumber + 1;
+                    numberSpan.textContent = newNumber;
+            }
+            else{
+                document.getElementById('lkbtn'+id).style='color:none;font-size: 25px;';
+                var numberSpan = document.getElementById('lkcount'+id);
+                var currentNumber = parseInt(numberSpan.textContent);
+                var newNumber = currentNumber - 1;
+                numberSpan.textContent = newNumber;
+            }
+            })
+            .catch(error => {
+            console.error('Error fetching data:', error);
+            // Handle the error appropriately, such as displaying an error message to the user
+            });
+        }
+
     </script>
-    {% endif %}
+
+    <script>
+        function deleteDoubt(id,profile_id){
+            if (confirm("Do you want to proceed?")) {
+                window.location.href = '/doubts/delete/'+id+"/"+profile_id;
+            }
+        }
+    </script>
+
+
 
 
     <!-- Footer Start -->

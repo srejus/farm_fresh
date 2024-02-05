@@ -30,6 +30,7 @@ class AskDoubtView(View):
         return redirect("/")
     
 
+@method_decorator(login_required, name='dispatch')
 class MyDoubts(View):
     def get(self,request,id):
         doubts = Doubt.objects.filter(user__id=id).order_by('-id')

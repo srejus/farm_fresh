@@ -43,10 +43,29 @@ class SignupView(View):
         pincode = request.POST.get("pincode")
         designation = request.POST.get("designation")
         exp = request.POST.get("exp")
+        if exp == '':
+            exp = 0
 
         if password1 != password2:
             err = "Password not matching!"
             return redirect(f"/accounts/signup?err={err}")
+    
+        user = User.objects.filter(username=username)
+        if user.exists():
+            err = "User with this username already exists"
+            return redirect(f"/accounts/signup?err={err}")
+        
+        acc = Account.objects.filter(Q(email=email) | Q(phone=phone)).exists()
+        if acc:
+            err = "User with this phone or email already exists"
+            return redirect(f"/accounts/signup?err={err}")
+        
+        user = User.objects.create_user(username=username,email=email,password=password1)
+        acc = Account.objects.create(user=user,full_name=full_name,phone=phone,
+                                     email=email,designation=designation,years_of_experience=exp,pincode=pincode)
+
+        return redirect('/accounts/login')
+        
         
         
 @method_decorator(login_required, name='dispatch')
