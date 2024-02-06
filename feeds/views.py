@@ -12,7 +12,7 @@ from .models import *
 class FeedView(View):
     def get(self,request):
         user = Account.objects.get(user=request.user)
-        feeds = Feed.objects.exclude(posted_by__user=request.user)
+        feeds = Feed.objects.exclude(posted_by__user=request.user).order_by('-id')
         return render(request,'feeds.html',{'feeds':feeds,'current_user':user})
 
 
@@ -20,13 +20,16 @@ class LikeUnlike(View):
     def get(self,request,id,uid):
         usr = Account.objects.get(id=uid)
         post = Feed.objects.get(id=id)
-        post.total_likes += 1
-        post.save()
+        
 
         try:
             Likes.objects.get(liked_by=usr,post=post).delete()
+            post.total_likes -= 1
+            post.save()
             return JsonResponse({"status":"disliked"})
 
         except:
             Likes.objects.create(liked_by=usr,post=post)
+            post.total_likes += 1
+            post.save()
             return JsonResponse({"status":"liked"})
