@@ -52,3 +52,23 @@
     padding: 15px;
     width: 100%;
 }
+
+
+/* floating btn in feeds */
+.floating-btn {
+    position: fixed;
+    bottom: 100px;
+    right: 50px;
+    background-color: green;
+    color: #fff;
+    padding: 15px 20px;
+    /* border-radius: 50%; */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .floating-btn:hover {
+    background-color: limegreen;
+    color: white;
+  }

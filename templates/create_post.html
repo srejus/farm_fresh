@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>FarmFresh | Ask Doubt</title>
+    <title>FarmFresh | Create Post</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
@@ -84,19 +84,14 @@
     </div>
     <!-- Main Start -->
     <div class="mid">
-        <h3>Ask Your Doubt</h3>
+        <h3>Create a Post</h3>
         
         <form action="" method="post" class="form" style="color: black;margin-left: 5px;">
             {% csrf_token %}
-            <label for="topic">Topic</label>
-            <select name="topic" class="form-control" style="color: black;">
-                <option value="seed">About Seed</option>
-                <option value="pesticide">About Pesticide</option>
-                <option value="fertiliser">About Fertiliser</option>
-                <option value="other">Other</option>
-            </select><br>
-            <textarea type="text" name="question" placeholder="Describe your question*" class="form-control" 
+            <textarea type="text" name="content" placeholder="Write your thoughts...*" class="form-control" 
             style="resize: none;height: 150px;" required></textarea><br>
+            <label for="topic">Topic</label>
+            <input type="text" name="tags" class="form-control" style="height: 40px;" placeholder="comma separated tags(eg: seed,farming)"><br>
             <input type="submit" value="Post" class="form-control mbtn" style="background-color: green;"><br>
         </form>
     </div>

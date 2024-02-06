@@ -33,3 +33,22 @@ class LikeUnlike(View):
             post.total_likes += 1
             post.save()
             return JsonResponse({"status":"liked"})
+
+
+@method_decorator(login_required, name='dispatch')
+class CreatePostView(View):
+    def get(self,request):
+        return render(request,'create_post.html')
+    
+    def post(self,request):
+        content = request.POST.get("content")
+        tags = request.POST.get("tags")
+
+        try:
+            acc = Account.objects.get(user=request.user)
+        except Account.DoesNotExist:
+            print("\n-------No Account Instance found----------\n")
+            return redirect("/feeds/")
+        
+        Feed.objects.create(posted_by=acc,post_content=content,tags=tags)
+        return redirect("/feeds/")
