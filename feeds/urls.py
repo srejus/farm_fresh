@@ -5,4 +5,5 @@ urlpatterns = [
     path('',FeedView.as_view()),
     path('like-unlike/<int:id>/<int:uid>',LikeUnlike.as_view()),
     path('create-post',CreatePostView.as_view()),
+    path('my-feeds',MyFeedsView.as_view()),
 ]

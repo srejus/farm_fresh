@@ -52,3 +52,11 @@ class CreatePostView(View):
         
         Feed.objects.create(posted_by=acc,post_content=content,tags=tags)
         return redirect("/feeds/")
+    
+
+@method_decorator(login_required, name='dispatch')
+class MyFeedsView(View):
+    def get(self,request):
+        user = Account.objects.get(user=request.user)
+        feeds = Feed.objects.filter(posted_by__user=request.user).order_by('-id')
+        return render(request,'feeds.html',{'feeds':feeds,'current_user':user})
