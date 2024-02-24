@@ -3,6 +3,8 @@ from django.views import View
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
+from django.db.models import Sum
+
 from .models import *
 
 
@@ -33,7 +35,21 @@ class AddCartView(View):
 class CartView(View):
     def get(self,request):
         cart = Cart.objects.filter(user__user=request.user)
-        return render(request,'cart.html',{'products':cart})
+        total_price_sum = cart.aggregate(total_price_sum=Sum('total_price'))['total_price_sum']
+        if total_price_sum is None:
+            total_price_sum = 0
+
+        return render(request,'cart.html',{'products':cart,'total_price_sum':total_price_sum})
+    
+
+@method_decorator(login_required, name='dispatch')
+class MyOrdersView(View):
+    def get(self,request,id=None):
+        orders = Order.objects.filter(user__user=request.user).order_by('-id')
+        if id:
+            order_items  =  OrderItems.objects.filter(order__id=id)
+            return render(request,'my_order_view.html',{'orders':order_items})
+        return render(request,'my_orders.html',{'orders':orders})
     
 
 @method_decorator(login_required, name='dispatch')

@@ -106,3 +106,8 @@ class EditProfileView(View):
         account.save()
 
         return redirect("/accounts/profile")
+    
+class LogoutView(View):
+    def get(self,request):
+        logout(request)
+        return redirect("/")

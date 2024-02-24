@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>FarmFresh | Signup</title>
+    <title>FarmFresh | My Orders</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
@@ -83,39 +83,42 @@
         </div>
     </nav>
     <!-- Navbar End -->
-    <div style="height: 100px;"></div>
+    <div style="height: 120px;"></div>
 
     <!-- Main Start -->
     <div class="container-fluid banner mb-5" style="min-height: 10vh;">
     </div>
     <!-- Main Start -->
+
+    <!-- Main Start -->
     <div class="mid">
-        <h3>Create an Account</h3>
+        <h3>My Orders</h3>
         <br>
-        <form action="" method="post" class="form">
-            {% csrf_token %}
-            <input type="text" name="username" placeholder="Enter Username...*" class="form-control" required><br>
-            <input type="password" name="password1" placeholder="Enter Password...*" class="form-control" required><br>
-            <input type="password" name="password2" placeholder="Confirm Password...*" class="form-control" required><br>
-            <input type="text" name="full_name" placeholder="Enter Full Name...*" class="form-control" required><br>
-            <input type="email" name="email" placeholder="Enter Email...*" class="form-control" required><br>
-            <input type="number" name="phone" placeholder="Enter Phone...*" class="form-control" required><br>
-            <input type="number" name="pincode" placeholder="Enter Pincode...*" class="form-control" required><br>
-            <input type="text" name="designation" placeholder="Enter Your Designation..." class="form-control"><br>
-            <input type="number" name="exp" placeholder="Years of Experience" class="form-control"><br>
-            <input type="submit" value="Create Account" class="form-control mbtn" style="background-color: limegreen;"><br>
-            <a href="/accounts/login/" style="color: dodgerblue;">Login to your account</a>
-        </form>
+        {% for order in orders %}
+       <div class="card form p-2 pt-3">
+        <a href="/store/my-orders/{{order.id}}"><b> # ORDERID_{{order.id}} - {{order.created_at}}</b></a>
+        <br>
+       
+        </div>
+        
+       </div>
+       <br>
+       {% endfor %}
+
+
     </div>
 
     <br><br><br><br>
 
-    {% if err %}
     <script>
-        alert('{{err}}');
-        location.href='/accounts/signup';
+        function deleteDoubt(id,profile_id){
+            if (confirm("Do you want to proceed?")) {
+                window.location.href = '/doubts/delete/'+id+"/"+profile_id;
+            }
+        }
     </script>
-    {% endif %}
+
+
 
 
     <!-- Footer Start -->
