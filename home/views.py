@@ -37,6 +37,7 @@ class MyDoubts(View):
         return render(request,'my_doubts.html',{'questions':doubts})
 
 
+@method_decorator(login_required, name='dispatch')
 class DeleteDoubt(View):
     def get(self,request,id,pro_id):
         try:
