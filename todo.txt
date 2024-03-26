@@ -1,0 +1,24 @@
+FARMER END
+
+-> Login/Signup - DONE
+-> Post,Delete,View Doubts - DONE
+-> Post Feeds,Like Feeds,Delete Feeds - DONE
+-> Store and Ordering - DONE
+-> Profile View and Edit Profile - DONE
+-> View Notifications Created by Admin
+
+AGRICULTURAL OFFICER
+
+-> Login System - DONE
+-> Dashboard - DONE
+-> View Doubts and Reply to Them - DONE
+-> Notification - DONE
+
+
+
+ADMIN
+
+-> Login System - DONE
+-> View all Users - DONE
+-> Manage Feeds2 - DONE
+-> Notification Creation - DONE

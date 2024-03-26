@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Account(models.Model):
+    AGRICULTURAL_OFFICER = 'AGRICULTURAL_OFFICER'
     USER_TYPE_CHOICES = (
         ('FARMER','FARMER'),
         ('AGRICULTURAL_OFFICER','AGRICULTURAL_OFFICER')

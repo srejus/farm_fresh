@@ -4,12 +4,13 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
 from accounts.models import Account
-from .models import Doubt
+from .models import Doubt,Notification
 
 # Create your views here.
 class IndexView(View):
     def get(self,request):
-        return render(request,'index.html')
+        notis = Notification.objects.filter(noti_to='FARMER').order_by('-id')
+        return render(request,'index.html',{'notis':notis})
     
 
 @method_decorator(login_required, name='dispatch')

@@ -10,3 +10,17 @@ class Doubt(models.Model):
     answered_by = models.ForeignKey(Account,on_delete=models.CASCADE,related_name='doubt_answered_by',null=True,blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True) # can know when anwered
+
+
+class Notification(models.Model):
+    AGRICULTURAL_OFFICER = 'AGRICULTURAL_OFFICER'
+    FARMER = 'FARMER'
+    TO_CHOICES = (
+        (FARMER,FARMER),
+        (AGRICULTURAL_OFFICER,AGRICULTURAL_OFFICER),
+    )
+
+    noti_to = models.CharField(max_length=25,default=FARMER,choices=TO_CHOICES)
+    noti_title = models.CharField(max_length=100)
+    noti_desc = models.TextField(null=True,blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)

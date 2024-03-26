@@ -23,6 +23,14 @@ class LoginView(View):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
+            next = request.GET.get("next")
+            if next:
+                return redirect(next)
+            
+            acc = Account.objects.get(user=user)
+            if acc.user_type == Account.AGRICULTURAL_OFFICER:
+                return redirect("/agri-officer")
+            
             return redirect("/")
         err = "Invalid credentails!"
         return redirect(f"/account/login/?err={err}")

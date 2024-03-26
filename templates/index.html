@@ -62,9 +62,11 @@
         <a href="/" class="navbar-brand d-flex d-lg-none">
             <h1 class="m-0 display-4 text-secondary"><span class="text-white">Farm</span>Fresh</h1>
         </a>
+        
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
+        
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav mx-auto py-0">
                 <a href="/" class="nav-item nav-link active">Home</a>
@@ -81,6 +83,11 @@
             </div>
         </div>
     </nav>
+    <marquee behavior="" direction="" style="font-size: 20px;color: black;">
+        {% for noti in notis %}
+        {{noti.noti_desc}} *** 
+        {% endfor %}
+    </marquee>
     <!-- Navbar End -->
 
 

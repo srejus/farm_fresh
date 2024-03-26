@@ -28,6 +28,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'accounts',
+    'admin_user',
+    'agri_officer',
     'feeds',
     'home',
     'store',
