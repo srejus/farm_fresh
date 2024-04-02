@@ -24,6 +24,7 @@ class Order(models.Model):
     address = models.CharField(max_length=250,null=True,blank=True)
     pay_mode = models.CharField(max_length=10,default='COD')
     pincode = models.CharField(max_length=6,null=True,blank=True)
+    total_price = models.FloatField(default=0.0)
     created_at = models.DateTimeField(auto_now_add=True)
 
 

@@ -17,17 +17,50 @@ class StoreView(View):
 
 @method_decorator(login_required, name='dispatch')
 class AddCartView(View):
-    def get(self,request):
-        qnty = request.GET.get("qnty")
-        item_id = request.GET.get("item_id")
+    def get(self,request,id):
+        qnty = "1"
+        # item_id = request.GET.get("item_id")
         acc = Account.objects.get(user=request.user)
 
-        item = Product.objects.get(id=item_id)
+        item = Product.objects.get(id=id)
         total = int(qnty)*item.price
-        if int(qnty) == 0:
-            Cart.objects.filter(user=acc,item_name=item.title).delete()
+
+        cart = Cart.objects.filter(user=acc,item_name=item.title)
+
+        if cart.exists():
+            cart = cart.last()
+            cart.quantity += 1
+            total = cart.quantity*item.price
+            cart.total_price = total
+            cart.save()
         else:
-            Cart.objects.create(user=acc,item_name=item.title,quantity=qnty,total_price=total)
+            Cart.objects.create(user=acc,item_name=item.title,quantity=1,total_price=total)
+        return redirect("/store/")
+    
+
+
+@method_decorator(login_required, name='dispatch')
+class RemoveCartView(View):
+    def get(self,request,id):
+        qnty = "1"
+        # item_id = request.GET.get("item_id")
+        acc = Account.objects.get(user=request.user)
+
+        item = Product.objects.get(id=id)
+        total = int(qnty)*item.price
+
+        cart = Cart.objects.filter(user=acc,item_name=item.title)
+
+        if cart.exists():
+            cart = cart.last()
+            if cart.quantity == 1:
+                cart.delete()
+            else:
+                cart.quantity -= 1
+                total = cart.quantity*item.price
+                cart.total_price = total
+                cart.save()
+       
         return redirect("/store/")
     
 
@@ -68,8 +101,24 @@ class PlaceOrderView(View):
             user=acc,full_name=full_name,number=number,email=email,address=address,pincode=pincode,pay_mode=pay_mode
         )
         cart = Cart.objects.filter(user=acc)
+        total_price = 0.0
         for item in cart:
+            total_price += item.total_price
             OrderItems.objects.create(order=order,item_name=item.item_name,total_price=item.total_price,quantity=item.quantity)
         
+        order.total_price = total_price
+        order.save()
         cart.delete()
-        return redirect("/")
+
+        # online payment
+        if pay_mode == 'PAY_ONLINE':
+            from farmer_media.utils import create_stripe_payment_link
+            pay_url = create_stripe_payment_link(total_price)
+            return redirect(pay_url)
+        
+        return render(request,'success.html')
+    
+
+class SuccessView(View):
+    def get(self,request):
+        return render(request,'success.html')
