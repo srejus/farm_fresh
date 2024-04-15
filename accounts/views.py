@@ -33,7 +33,7 @@ class LoginView(View):
             
             return redirect("/")
         err = "Invalid credentails!"
-        return redirect(f"/account/login/?err={err}")
+        return redirect(f"/accounts/login/?err={err}")
     
 
 class SignupView(View):
@@ -51,6 +51,7 @@ class SignupView(View):
         pincode = request.POST.get("pincode")
         designation = request.POST.get("designation")
         exp = request.POST.get("exp")
+        gender = request.POST.get("gender")
         if exp == '':
             exp = 0
 
@@ -70,7 +71,7 @@ class SignupView(View):
         
         user = User.objects.create_user(username=username,email=email,password=password1)
         acc = Account.objects.create(user=user,full_name=full_name,phone=phone,
-                                     email=email,designation=designation,years_of_experience=exp,pincode=pincode)
+                                     email=email,designation=designation,years_of_experience=exp,pincode=pincode,gender=gender)
 
         return redirect('/accounts/login')
         
