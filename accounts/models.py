@@ -6,7 +6,8 @@ class Account(models.Model):
     AGRICULTURAL_OFFICER = 'AGRICULTURAL_OFFICER'
     USER_TYPE_CHOICES = (
         ('FARMER','FARMER'),
-        ('AGRICULTURAL_OFFICER','AGRICULTURAL_OFFICER')
+        ('AGRICULTURAL_OFFICER','AGRICULTURAL_OFFICER'),
+        ('ADMIN','ADMIN'),
     )
     user = models.ForeignKey(User,on_delete=models.CASCADE,related_name='user')
     full_name = models.CharField(max_length=100)

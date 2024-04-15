@@ -13,10 +13,7 @@ from store.models import *
 # Create your views here.
 @method_decorator(login_required,name='dispatch')
 class AdminHomeView(View):
-    def get(self,request):
-        if not request.user.is_superuser:
-            return redirect("/")
-        
+    def get(self,request):        
         return render(request,'Admin_home.html')
     
 

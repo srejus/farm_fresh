@@ -31,6 +31,9 @@ class LoginView(View):
             if acc.user_type == Account.AGRICULTURAL_OFFICER:
                 return redirect("/agri-officer")
             
+            if acc.user_type == 'ADMIN':
+                return redirect("/admin-user/")
+            
             return redirect("/")
         err = "Invalid credentails!"
         return redirect(f"/accounts/login/?err={err}")
