@@ -4,7 +4,7 @@
 <head>
       <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Farmer Media Admin</title>
+    <title>Farmer Media Admin | Items</title>
 	<!-- BOOTSTRAP STYLES-->
     <link href="{% static 'assets_admin/css/bootstrap.css' %}" rel="stylesheet" />
      <!-- FONTAWESOME STYLES-->
@@ -47,7 +47,7 @@
                  
 
 
-                    <li class="active-link">
+                    <li>
                         <a href="#" ><i class="fa fa-desktop "></i>Dashboard <span class="badge"></span></a>
                     </li>
 
@@ -62,11 +62,9 @@
                    <li>
                         <a href="/admin-user/notifications"><i class="fa fa-globe "></i>Notifications  <span class="badge"></span></a>
                     </li>
-                   
-                 <li>
+                    <li class="active-link">
                         <a href="/admin-user/items"><i class="fa fa-list "></i>Items  <span class="badge"></span></a>
                     </li>
-
 
                     <li>
                         <a href="/admin-user/orders"><i class="fa fa-shopping-cart "></i>Orders  <span class="badge"></span></a>
@@ -108,57 +106,24 @@
                     </div>
                     </div>
                   <!-- /. ROW  --> 
-                            <div class="row text-center pad-top">
-                    <div class="col-lg-2 rw">
-                      <div class="div-square">
-                           <a href="/admin-user/users" >
- <i class="fa fa-users fa-4x"></i>
-                      <h4>Users</h4>
-                      </a>
-                      </div>
-                     
-                     
-                  </div> 
                  
-                  <div class="col-lg-2 rw">
-                      <div class="div-square">
-                           <a href="/admin-user/notifications" >
- <i class="fa fa-globe fa-4x"></i>
-                      <h4>Manage Notifications</h4>
-                      </a>
-                      </div>
+                  <div style="overflow-y: scroll;height: 85vh;">
+                        <h3 style="text-align: center;"><b>Add New Product</b></h3><br>
+                      <form action="" method="POST">
+                        {% csrf_token %}
+                        <input type="text" placeholder="Enter Product Title...*" 
+                        required class="form-control" name="title"><br>
+                        <label for="">Product Image</label>
+                        <input type="file" name="product_image" accept="image/*" required><br>
+                        <input type="number" placeholder="Enter Product Price...*" class="form-control" name="price"><br>
+                        <input type="text" name="type" class="form-control" placeholder="Enter Product Type..."><br>
+                        <button class="btn btn-success">Add New</button>
+                      </form>
+                 
+                  </div>
+                     
                      
                   </div>
-
-                  <div class="col-lg-2 rw">
-                    <div class="div-square">
-                         <a href="/admin-user/items" >
-<i class="fa fa-list fa-4x"></i>
-                    <h4>Manage Items</h4>
-                    </a>
-                    </div>
-                   
-                </div>
-
-
-                <div class="col-lg-2 rw">
-                    <div class="div-square">
-                         <a href="/admin-user/orders" >
-<i class="fa fa-shopping-cart fa-4x"></i>
-                    <h4>Manage Orders</h4>
-                    </a>
-                    </div>
-                   
-                </div>
-                  <div class="col-lg-2 rw">
-                    <div class="div-square">
-                         <a href="/admin-user/feeds" >
-<i class="fa fa-edit fa-4x"></i>
-                    <h4>Manage Feeds</h4>
-                    </a>
-                    </div>
-                   
-                </div>
               </div>
                  <!-- /. ROW  -->   
 				  <div class="row">

@@ -22,3 +22,4 @@ ADMIN
 -> View all Users - DONE
 -> Manage Feeds2 - DONE
 -> Notification Creation - DONE
+-> Add and manage Items - DONE
