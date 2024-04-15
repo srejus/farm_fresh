@@ -94,9 +94,13 @@
     <div style="display: flex;justify-content: center;">
         <div class="card m-3 p-3" style="width: 80%;"><br>
             <div style="display: flex;">
-                <img style="width: 110px;margin-left: 35%;margin-top:-25px;margin-right: -15px;"
+                <img style="width: 110px;margin-left: 15%;margin-top:-25px;margin-right: -15px;"
                 src="https://i.gifer.com/7efs.gif" alt="">
+                {% if is_cod %}
                 <h3 style="text-align: center;">Order Placed Successfully!</h3>
+                {% else %}
+                <h3>Payment successfull and Order Placed Successfully!</h3>
+                {% endif %}
             </div>
             <br><button class="btn btn-primary" onclick="window.location.href='/'">Home</button>
         </div>

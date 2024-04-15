@@ -116,7 +116,7 @@ class PlaceOrderView(View):
             pay_url = create_stripe_payment_link(total_price)
             return redirect(pay_url)
         
-        return render(request,'success.html')
+        return render(request,'success.html',{'is_cod':True})
     
 
 class SuccessView(View):
