@@ -90,14 +90,21 @@
     </div>
     <!-- Main Start -->
     <div class="mid">
+        {% if is_admin %}
+        <h3>Login as Admin</h3>
+        {% else %}
         <h3>Login to Your Account</h3>
+        {% endif %}
         <br>
         <form action="" method="post" class="form">
             {% csrf_token %}
             <input type="text" name="username" placeholder="Enter Username...*" class="form-control" required><br>
             <input type="password" name="password" placeholder="Enter Password...*" class="form-control" required><br>
             <input type="submit" value="Login" class="form-control mbtn" style="background-color: limegreen;"><br>
+            
+            {% if not is_admin %}
             <a href="/accounts/signup" style="color: dodgerblue;">Create an Account</a>
+            {% endif %}
         </form>
     </div>
 

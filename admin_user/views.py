@@ -20,8 +20,27 @@ class AdminHomeView(View):
 @method_decorator(login_required,name='dispatch')
 class AdminUserView(View):
     def get(self,request):
-        users = Account.objects.all()
+        users = Account.objects.exclude(user=request.user)
         return render(request,'Admin_users.html',{'users':users})
+    
+
+@method_decorator(login_required,name='dispatch')
+class AdminDisableUserView(View):
+    def get(self,request,id=None):
+        user = Account.objects.get(id=id).user
+        user.is_active = False
+        user.save()
+        return redirect("/admin-user/users")
+    
+
+@method_decorator(login_required,name='dispatch')
+class AdminApproveUserView(View):
+    def get(self,request,id=None):
+        user = Account.objects.get(id=id).user
+        user.is_active = True
+        user.save()
+        return redirect("/admin-user/users")
+    
 
 @method_decorator(login_required,name='dispatch')
 class AdminItemsView(View):

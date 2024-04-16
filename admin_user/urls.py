@@ -5,6 +5,9 @@ urlpatterns = [
     path('',AdminHomeView.as_view()),
     path('users',AdminUserView.as_view()),
 
+    path('users/approve/<int:id>',AdminApproveUserView.as_view()),
+    path('users/disable/<int:id>',AdminDisableUserView.as_view()),
+
     path('items',AdminItemsView.as_view()),
     path('items/delete/<int:id>',AdminItemsView.as_view()),
     path('items/add',AdminAddItemView.as_view()),

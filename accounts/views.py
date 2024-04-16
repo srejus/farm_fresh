@@ -14,7 +14,12 @@ from .models import *
 class LoginView(View):
     def get(self,request):
         err = request.GET.get("err")
-        return render(request,'login.html',{'err':err})
+        next = request.GET.get("next","")
+        if next == '/admin-user/':
+            is_admin = True
+        else:
+            is_admin=False
+        return render(request,'login.html',{'err':err,'is_admin':is_admin})
 
     def post(self,request):
         username = request.POST.get("username")
@@ -73,6 +78,8 @@ class SignupView(View):
             return redirect(f"/accounts/signup?err={err}")
         
         user = User.objects.create_user(username=username,email=email,password=password1)
+        user.is_active = False
+        user.save()
         acc = Account.objects.create(user=user,full_name=full_name,phone=phone,
                                      email=email,designation=designation,years_of_experience=exp,pincode=pincode,gender=gender)
 

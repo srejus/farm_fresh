@@ -116,6 +116,7 @@
                             <th>Phone</th>
                             <th>Email</th>
                             <th>User Type</th>
+                            <th>Action</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -125,6 +126,17 @@
                             <td>{{user.phone}}</td>
                             <td>{{user.email}}</td>
                             <td>{{user.user_type}}</td>
+
+                            <td>
+                                {% if user.user.is_active %}
+                                <button class="btn btn-danger" 
+                                onclick="window.location.href='/admin-user/users/disable/{{user.id}}'"
+                                >Disable</button>
+                                {% else %}
+                                <button onclick="window.location.href='/admin-user/users/approve/{{user.id}}'"
+                                class="btn btn-success">Approve</button>
+                                {% endif %}
+                            </td>
                           </tr>
                           {% endfor %}
                         </tbody>
